@@ -1,0 +1,145 @@
+NASRecorder
+===========
+
+I have a HDHomerun which I'm quite happy with. I also have a Synology NAS which I'm equally happy 
+with. Both devices are on 24/7 - so I figured why not combine the two devices and "build" a regular
+DVB recorder with XMLTV integration - without the need for a PC/Mac to be on. 
+
+There is nothing preventing this system from being used on a PC/Mac - as long as a MySQL/MariaDB 
+server and web server with PHP 5 support, and the SiliconDust libhdhomerun tool is available for the 
+platform.
+
+My NAS is a Synology DS-209 with a "Marvell Kirkwood mv6281" CPU - which is an ARM cpu architecture.
+(check the cpu architecture of your Synology here: 
+http://forum.synology.com/wiki/index.php/What_kind_of_CPU_does_my_NAS_have)
+Silicondust provides the libhdhomerun tool in precompiled binary versions for Windows and Mac and
+the source is provided for Linux so you can compile it yourself. Most NAS's run some version of
+embedded Linux so the libhdhomerun tool can fairly easily be compiled for running directly on your 
+NAS.
+
+Just to be sure not to run into problems caused by running an outdated firmware version, I recommend
+upgrading your firmware on the HDHomerun device to be that of the libhdhomerun version you are about
+to compile on your device.
+
+Requirements
+------------
+	- Database - MySQL/MariaDB
+	- XMLTV parser/provider
+	- HDHomerun device
+	- Apache and PHP5 or Jetty (JVM)
+	- telnet or ssh access to your system
+	- [ Transcoder ]
+	- [ DLNA service to serve the recorded files to your playback device ]
+
+
+Database
+---------
+To be able to easily access and search program listings I chose to use the XMLTV format, and parse
+it into a relational database.
+
+The same database is used for storing the channel frequencies, modulation, symbol rates, etc. that
+the specific for the HDHomerun.
+
+To create the database you should run this command (NOTE: this will drop the nas_recorder database
+and create a fresh copy - any schedules, listings and existing configuration will be deleted):
+	mysql -u root < db/schema.sql
+
+(by default the root user can only log on from the NAS itself and he does not need to provide a 
+password when doing so. If you have changed the defaults, you can add a -p after -u root, and mysql
+will ask for a password)
+
+
+PHP
+---
+On the Synology device there is an Apache installtion with PHP enabled. However, PHP is configured
+in such a way that you cannot access the file system on the NAS from PHP, and also you cannot 
+execute shell commands from PHP. This needs to be enabled before the system will be able to 
+function.
+
+To enable PHP to perform these operations anyway we need to change the php configuration on the NAS.
+In firmware <2.3 the php.ini can be found in /usr/syno/etc/php.ini, but in firmware 2.3 and later
+versions the php.ini file is generated at startup. So we need to modify the file that generates
+php.ini - this is /usr/syno/etc.defaults/rc.d/S97apache-user.sh
+
+--- INCOMPLETE
+
+
+Java - Jetty
+------------
+
+
+--- INCOMPLETE
+
+
+Python / Django
+---------------
+http://ghughes.com/
+
+
+HDHomerun - Firmware Upgrade
+----------------------------
+Install the latest firmware from SiliconDust - download it using the link for your HDHomerun device
+at the bottom of the http://www.silicondust.com/support/hdhomerun/downloads/linux/ page.
+
+Install it on your device by using the hdhomerun_config command which can be downloaded for your 
+computer platform from: http://www.silicondust.com/support/hdhomerun/downloads/
+
+If you only own one HDHomerun device you can install the firmware using this command:
+	hdhomerun_config ffffffff upgrade hdhomerun_dvbt_firmware_20120128.bin
+
+If you own multiple HDHomerun devices, you can upgrade each of them by locating their device id,
+using:
+	hdhomerun_config discover
+and then run the upgrade command with the proper device id instead of ffffffff.
+
+
+hdhomerun_config - Compilation
+------------------------------
+To be able to use the hdhomerun_config command on a ARM or PowerPC based NAS you have to compile 
+the libhdhomerun source for use on the CPU architecture
+
+
+You have two choices - either configure a cross compile toolchain on your own computer, or compile 
+the tool directly on your ARM device. 
+I chose to compile directly on my NAS as I already had an environment configured for this kind of
+job on my Synology.
+
+I first downloaded a bootstrap (the relevant bootstrap for your Synology can be found here:
+http://tools.forret.com/synology/bootstrap.php)
+
+The downloaded bootstrap sh script file should then be uploaded to your Synology - e.g. in your 
+/volume1/public folder. 
+Next ssh to your device as root (the password for root is the same as that for your admin account).
+After logging on, go to the folder where the bootstrap sh file was placed and execute the script. 
+E.g.:
+	cd /volume1/public
+	sh <name_of_bootstrap_script>.sh
+
+After the script completes you should reboot your device - just execute reboot as the root user:
+	reboot
+	
+One of the really nice things the bootstrap does is to setup the Itsy package manger - ipkg.
+
+In order to compile on the NAS, we need tools like make, configure etc. - these common Linux
+development tools have been included in an ipkg package named optware-devel, to install it you 
+should ssh as root to the synology and then execute this command:
+	ipkg install optware-devel
+
+After the install completes - (last time I installed optware-devel there was an error - but the 
+error occurred after the tools had been installed, while generating documentation. So the tools 
+themselves were installed just fine)
+
+If the make command is available you should be able to compile libhdhomerun. Download the 
+libhdhomerun source from http://www.silicondust.com/support/hdhomerun/downloads/linux/
+and upload the archive to /volume1/public on your Synology NAS.
+
+ssh to the device as root and extract the archive.
+Go into the folder where the archive was extracted to and run the make command without parameters.
+After make completes it should have generated a hdhomerun_config in the same folder.
+
+Chech that you can execute it (while the NAS is on the same network as your HDHomerun, and your 
+HDHomerun is turned on):
+	./hdhomerun_config discover
+
+The result should be a list of HDHomerun device IDs and IP-addresses where HDHomerun devices
+were found on your network.
