@@ -1,9 +1,11 @@
-package org.joensson.scheduler;
+package org.joensson.nasdvr.scheduler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import static java.lang.Long.parseLong;
 
 /**
  * User: frj
@@ -17,8 +19,8 @@ import org.springframework.stereotype.Component;
 public class RecordingScheduler {
     private static final Logger logger = LoggerFactory.getLogger(RecordingScheduler.class);
 
-    @Scheduled(fixedDelay = 120000)
+    @Scheduled(cron = "${scheduler.cron}" )
     public void record() {
-        logger.info("Recording...");
+        logger.info("Checking if any recordings should be started...");
     }
 }

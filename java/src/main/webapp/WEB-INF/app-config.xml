@@ -3,13 +3,13 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
               http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
               http://www.springframework.org/schema/jdbc
               http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
               http://www.springframework.org/schema/context
-              http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+              http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
     <!-- Configuration to support running the rewards application. -->
 
@@ -18,13 +18,14 @@
 
     <context:annotation-config/>
 
+    <import resource="common-config.xml"/>
 
     <!-- BoneCP configuration -->
     <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
         <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1/nas_recorder" />
-        <property name="username" value="root"/>
-        <property name="password" value="papkasse"/>
+        <property name="jdbcUrl" value="jdbc:mysql://${db.server}/${db.databasename}" />
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
         <property name="idleConnectionTestPeriodInSeconds" value="60"/>
         <property name="idleMaxAgeInMinutes" value="240"/>
         <property name="maxConnectionsPerPartition" value="15"/>
@@ -43,9 +44,10 @@
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="annotatedPackages" value="org.joensson"/>
+        <property name="annotatedPackages" value="org.joensson.nasdvr"/>
         <property name="hibernateProperties">
             <props>
+                <!-- Enable the hibernate.connection properties to be able to declare the sessionFactory without an external dataSource -->
                 <!--prop key="hibernate.connection.provider_class">com.jolbox.bonecp.provider.BoneCPConnectionProvider</prop>
                 <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
                 <prop key="hibernate.connection.url">jdbc:mysql://127.0.0.1/yourdb</prop>
