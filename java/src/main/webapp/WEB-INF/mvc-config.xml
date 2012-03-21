@@ -2,18 +2,43 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-                        http://www.springframework.org/schema/mvc     http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+                        http://www.springframework.org/schema/mvc     http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+                        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
 
     <import resource="common-config.xml"/>
 
+    <mvc:annotation-driven>
+<!--        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+            </bean>
+        </mvc:message-converters> -->
+    </mvc:annotation-driven>
 
-    <context:component-scan base-package="org.joensson.nasdvr.scheduler"/>
 
-    <mvc:annotation-driven/>
+    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
+    </bean>
+
+    <bean
+            class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jacksonObjectMapper" />
+        <property name="targetMethod" value="setVisibility" />
+        <property name="arguments">
+            <list>
+                <value type="org.codehaus.jackson.annotate.JsonMethod">FIELD</value>
+                <value type="org.codehaus.jackson.annotate.JsonAutoDetect.Visibility">ANY</value>
+            </list>
+        </property>
+    </bean>
+
+    <util:constant static-field="org.codehaus.jackson.annotate.JsonMethod.FIELD" id="jsonMethodField"/>
+
+    <context:component-scan base-package="org.joensson.nasdvr.web"/>
+
 
     <task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
     <task:executor id="myExecutor" pool-size="5"/>
