@@ -10,7 +10,7 @@
                         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
 
-    <import resource="common-config.xml"/>
+    <import resource="classpath*:org/joensson/nasdvr/internal/common-config.xml"/>
 
     <mvc:annotation-driven>
 <!--        <mvc:message-converters register-defaults="true">
@@ -18,24 +18,6 @@
             </bean>
         </mvc:message-converters> -->
     </mvc:annotation-driven>
-
-
-    <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper">
-    </bean>
-
-    <bean
-            class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-        <property name="targetObject" ref="jacksonObjectMapper" />
-        <property name="targetMethod" value="setVisibility" />
-        <property name="arguments">
-            <list>
-                <value type="org.codehaus.jackson.annotate.JsonMethod">FIELD</value>
-                <value type="org.codehaus.jackson.annotate.JsonAutoDetect.Visibility">ANY</value>
-            </list>
-        </property>
-    </bean>
-
-    <util:constant static-field="org.codehaus.jackson.annotate.JsonMethod.FIELD" id="jsonMethodField"/>
 
     <context:component-scan base-package="org.joensson.nasdvr.web"/>
 
