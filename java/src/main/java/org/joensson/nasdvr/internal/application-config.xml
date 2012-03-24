@@ -21,24 +21,6 @@
 
     <context:annotation-config/>
 
-    <import resource="common-config.xml"/>
-
-    <!-- BoneCP configuration -->
-    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-        <property name="driverClass" value="com.mysql.jdbc.Driver" />
-        <property name="jdbcUrl" value="jdbc:mysql://${db.server}/${db.databasename}" />
-        <property name="username" value="${db.username}"/>
-        <property name="password" value="${db.password}"/>
-        <property name="idleConnectionTestPeriodInSeconds" value="60"/>
-        <property name="idleMaxAgeInMinutes" value="240"/>
-        <property name="maxConnectionsPerPartition" value="15"/>
-        <property name="minConnectionsPerPartition" value="5"/>
-        <property name="partitionCount" value="3"/>
-        <property name="acquireIncrement" value="5"/>
-        <property name="statementsCacheSize" value="100"/>
-        <property name="releaseHelperThreads" value="3"/>
-    </bean>
-
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="file:/Users/frj/dev/NASRecorder/db/schema.sql"/>
     </jdbc:initialize-database>
@@ -50,6 +32,14 @@
         <property name="annotatedClasses">
             <list>
                 <value>org.joensson.nasdvr.model.Actor</value>
+                <value>org.joensson.nasdvr.model.Category</value>
+                <value>org.joensson.nasdvr.model.Channel</value>
+                <value>org.joensson.nasdvr.model.ChannelMap</value>
+                <value>org.joensson.nasdvr.model.Frequency</value>
+                <value>org.joensson.nasdvr.model.Modulation</value>
+                <value>org.joensson.nasdvr.model.Program</value>
+                <value>org.joensson.nasdvr.model.Programme</value>
+                <value>org.joensson.nasdvr.model.ProgrammeCredits</value>
             </list>
         </property>
         <property name="hibernateProperties">

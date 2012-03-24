@@ -1,0 +1,13 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+              http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <!--<jdbc:embedded-database type="HSQL" id="dataSource">-->
+        <!--<jdbc:script location="file:/Users/frj/dev/NASRecorder/db/schema.sql"/>-->
+    <!--</jdbc:embedded-database>-->
+
+<import resource="classpath*:org/joensson/nasdvr/internal/infrastructure.xml"/>
+
+</beans>

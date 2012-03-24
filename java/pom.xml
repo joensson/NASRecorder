@@ -125,11 +125,19 @@
           <scope>runtime</scope>
       </dependency>
 
+      <!-- Test dependencies -->
 
       <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-test</artifactId>
           <version>${spring.version}</version>
+          <scope>test</scope>
+      </dependency>
+
+      <dependency>
+          <groupId>org.hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>2.1.0</version>
           <scope>test</scope>
       </dependency>
 

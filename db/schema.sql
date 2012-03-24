@@ -71,7 +71,8 @@ CREATE TABLE IF NOT EXISTS hdhr_channel_frequency (
   freq INT NOT NULL,
   symbol_rate INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (channel_map_id) REFERENCES hdhr_channel_map(id) ON DELETE SET NULL ON UPDATE CASCADE
+  FOREIGN KEY (channel_map_id) REFERENCES hdhr_channel_map(id) ON DELETE SET NULL ON UPDATE CASCADE,
+  FOREIGN KEY (modulation_id) REFERENCES hdhr_modulation(id) ON DELETE CASCADE ON UPDATE CASCADE  
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
 
@@ -115,7 +116,6 @@ CREATE TABLE IF NOT EXISTS programme (
   sub_title VARCHAR(250) DEFAULT NULL,
   description TEXT,
   category_id INT,
-  credits_id INT DEFAULT NULL,
   episode_num VARCHAR(10) DEFAULT NULL,
   icon VARCHAR(200),
   PRIMARY KEY (id),

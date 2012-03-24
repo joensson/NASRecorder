@@ -4,11 +4,11 @@ package org.joensson.nasdvr.model;
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
 @Table(name = "actor")
-//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Actor {
     
     @Id
@@ -23,7 +23,11 @@ public class Actor {
     private String characterName;
 
 
-    public void setEntityId(int entityId) {
+    @OneToMany
+    @JoinColumn(name = "actor_id")
+    private List<ProgrammeCredits> credits;
+
+    protected void setEntityId(int entityId) {
         this.entityId = entityId;
     }
 
