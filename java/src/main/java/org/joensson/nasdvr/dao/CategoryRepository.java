@@ -1,5 +1,9 @@
 package org.joensson.nasdvr.dao;
 
+import org.joensson.nasdvr.model.Category;
+
+import java.util.List;
+
 /**
  * User: frj
  * Date: 3/25/12
@@ -7,5 +11,8 @@ package org.joensson.nasdvr.dao;
  *
  * @Author frj
  */
-public interface CategoryRepository {
+public interface CategoryRepository extends NasDvrRepository<Category> {
+
+    public List<Category> find(String category);
+
 }

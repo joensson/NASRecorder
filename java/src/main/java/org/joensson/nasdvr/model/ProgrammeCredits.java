@@ -3,21 +3,15 @@ package org.joensson.nasdvr.model;
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 9:08 AM
- *
- * @Author frj
- */
+
 @Entity
 @Table(name = "programme_credits")
-public class ProgrammeCredits {
+public class ProgrammeCredits  implements   NasDvrEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -43,12 +37,12 @@ public class ProgrammeCredits {
         this.programme = programme;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 
 }

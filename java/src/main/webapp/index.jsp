@@ -18,15 +18,10 @@
     });
 
     function getJSONResponse() {
-        $.getJSON('<c:url value="/rest/schedule/showSchedule" />', function(data, responseText) {
+        $.getJSON('<c:url value="/rest/schedule/createActor" />', function(data, responseText) {
             $('#result').html('Result from ajax/json<br/>');
             $('#result').append('JSON: ' + JSON.stringify(data) );
             $('#result').append('<br />');
-            $('#result').append('ID: ' + data.entityId);
-            $('#result').append('<br />');
-            $('#result').append('Name: ' + data.actorName);
-            $('#result').append('<br />');
-            $('#result').append('Character: ' + data.characterName);
             console.log(data);
         }).error(function (error) {
                      alert('Fejl!');

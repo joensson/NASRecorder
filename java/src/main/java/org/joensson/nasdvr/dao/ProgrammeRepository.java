@@ -1,11 +1,16 @@
 package org.joensson.nasdvr.dao;
 
-/**
- * User: frj
- * Date: 3/25/12
- * Time: 10:57 PM
- *
- * @Author frj
- */
-public interface ProgrammeRepository {
+import org.joensson.nasdvr.model.Programme;
+
+import java.util.Date;
+import java.util.List;
+
+public interface ProgrammeRepository extends NasDvrRepository<Programme> {
+
+    public List<Programme> findByStartTime(Date startTime);
+    public List<Programme> findByTitle(String title);
+    public List<Programme> findBySubTitle(String subTitle);
+    public List<Programme> findByEpisodeNum(String epNum);
+
+
 }

@@ -1,8 +1,7 @@
 package org.joensson.nasdvr.web;
 
-import org.hibernate.SessionFactory;
-import org.joensson.nasdvr.dao.ActorDao;
-import org.joensson.nasdvr.dao.SchedulerDao;
+import org.joensson.nasdvr.dao.ActorRepository;
+import org.joensson.nasdvr.dao.jpa.SchedulerDao;
 import org.joensson.nasdvr.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +31,26 @@ public class SchedulingController {
     @Autowired
     private SchedulerDao schedulerDao;
 
-    @RequestMapping(value = "showSchedule",  method = RequestMethod.GET)
+    @Autowired
+    private ActorRepository actorRepository;
+
+    @RequestMapping(value = "createActor",  method = RequestMethod.GET)
+    public @ResponseBody List<Actor> createActor() throws MalformedURLException {
+        Actor actor = new Actor();
+        actor.setActorName("Jackie Chan");
+        actor.setCharacterName("Did it work?");
+        actorRepository.save(actor);
+
+        actor = new Actor();
+        actor.setActorName("Clint Eastwood");
+        actor.setCharacterName("...yes it did :-)");
+        actorRepository.save(actor);
+
+        return actorRepository.fetchAll();
+
+    }
+
+        @RequestMapping(value = "showSchedule",  method = RequestMethod.GET)
     public @ResponseBody Actor showSchedule(Model model) throws MalformedURLException {
         //TODO
 

@@ -4,21 +4,14 @@ import javax.persistence.*;
 import java.net.URL;
 import java.util.Date;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 9:01 AM
- *
- * @Author frj
- */
 @Entity
 @Table(name = "programme")
-public class Programme {
+public class Programme  implements   NasDvrEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
     @ManyToOne(cascade = CascadeType.ALL )
     @JoinColumn(name = "channel_id")
@@ -83,12 +76,12 @@ public class Programme {
         this.endTime = endTime;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 
     public String getEpisodeNumber() {

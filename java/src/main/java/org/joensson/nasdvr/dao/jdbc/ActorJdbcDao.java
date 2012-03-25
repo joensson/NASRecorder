@@ -6,16 +6,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * User: frj
- * Date: 3/24/12
- * Time: 2:02 PM
- *
- * @Author frj
- */
 @Component
 public class ActorJdbcDao extends AbstractJdbcRepository<Actor> implements ActorRepository {
 
+    public List<Actor> fetchAll() {
+        List<Actor> results = jdbcTemplate.query("SELECT * FROM actor", rowMapper);
+        return results;
+    }
 
     public Actor find(int id) {
         List<Actor> results = jdbcTemplate.query("SELECT * FROM actor WHERE id=?", rowMapper, id);
@@ -36,10 +33,10 @@ public class ActorJdbcDao extends AbstractJdbcRepository<Actor> implements Actor
     }
 
     public void save(Actor actor) {
-        if (actor.getEntityId() == 0) {
+        if (actor.getId() == 0) {
             jdbcTemplate.update("INSERT INTO actor (actor_name, character_name) VALUES(?, ?)", actor.getActorName(), actor.getCharacterName());
         } else {
-            jdbcTemplate.update("UPDATE actor SET actor_name = ? AND  character_name = ?  WHERE id = ?", actor.getActorName(), actor.getCharacterName(), actor.getEntityId());
+            jdbcTemplate.update("UPDATE actor SET actor_name = ? AND  character_name = ?  WHERE id = ?", actor.getActorName(), actor.getCharacterName(), actor.getId());
         }
 
     }

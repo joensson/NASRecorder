@@ -1,5 +1,7 @@
 package org.joensson.nasdvr.dao;
 
+import org.joensson.nasdvr.model.ChannelMap;
+
 /**
  * User: frj
  * Date: 3/25/12
@@ -7,5 +9,6 @@ package org.joensson.nasdvr.dao;
  *
  * @Author frj
  */
-public interface ChannelMapRepository {
+public interface ChannelMapRepository extends NasDvrRepository<ChannelMap> {
+
 }

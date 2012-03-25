@@ -5,20 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.ParameterizedBeanPropertyRowMapper;
 
-/**
- * User: frj
- * Date: 3/25/12
- * Time: 10:08 PM
- *
- * @Author frj
- */
-public  abstract class AbstractJdbcRepository<T extends NasDvrEntity>  {
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
-    private Class<T> entityClazz;
+public  abstract class AbstractJdbcRepository<T extends NasDvrEntity>  {
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;
+    protected ParameterizedBeanPropertyRowMapper<T> rowMapper;
 
-    protected ParameterizedBeanPropertyRowMapper<T> rowMapper = ParameterizedBeanPropertyRowMapper.newInstance(entityClazz);
+    protected AbstractJdbcRepository() {
+        Class entityClazz = ((Class) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
+
+        rowMapper = ParameterizedBeanPropertyRowMapper.newInstance(entityClazz);
+    }
+
+
 
 }

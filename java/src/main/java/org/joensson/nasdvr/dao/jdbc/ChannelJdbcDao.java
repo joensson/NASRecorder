@@ -1,7 +1,9 @@
 package org.joensson.nasdvr.dao.jdbc;
 
 import org.joensson.nasdvr.dao.ChannelRepository;
+import org.joensson.nasdvr.dao.ProgramRepository;
 import org.joensson.nasdvr.model.Channel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -9,8 +11,19 @@ import java.util.List;
 @Component
 public class ChannelJdbcDao extends AbstractJdbcRepository<Channel> implements ChannelRepository {
 
+
+    @Autowired
+    private ProgramRepository programRepository;
+
     public ChannelJdbcDao() {
+        super();
         rowMapper.setCheckFullyPopulated(false); //to allow for us to retrieve hdhr_program_id and set that manually
+    }
+
+
+    public List<Channel> fetchAll() {
+        List<Channel> results = jdbcTemplate.query("SELECT * FROM channel WHERE display_name = ?", rowMapper);
+        return results;
     }
 
     public List<Channel> find(String displayName) {
@@ -29,10 +42,10 @@ public class ChannelJdbcDao extends AbstractJdbcRepository<Channel> implements C
 
     public void save(Channel channel) {
         //TODO: Call programdao and create program before inserting reference
-        if (channel.getEntityId() == 0) {
-            jdbcTemplate.update("INSERT INTO channel (channel_id, display_name, hdhr_program_id) VALUES (?, ?, ?)", channel.getChannelId(), channel.getDisplayName(), channel.getProgram().getEntityId());
+        if (channel.getId() == 0) {
+            jdbcTemplate.update("INSERT INTO channel (channel_id, display_name, hdhr_program_id) VALUES (?, ?, ?)", channel.getChannelId(), channel.getDisplayName(), channel.getProgram().getId());
         } else {
-            jdbcTemplate.update("UPDATE channel SET channel_id = ?, display_name = ?, hdhr_program_id = ? WHERE id = ?", channel.getChannelId(), channel.getDisplayName(), channel.getProgram().getEntityId(), channel.getEntityId());
+            jdbcTemplate.update("UPDATE channel SET channel_id = ?, display_name = ?, hdhr_program_id = ? WHERE id = ?", channel.getChannelId(), channel.getDisplayName(), channel.getProgram().getId(), channel.getId());
         }
     }
 }

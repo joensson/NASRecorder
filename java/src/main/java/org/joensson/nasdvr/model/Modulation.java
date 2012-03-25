@@ -2,22 +2,15 @@ package org.joensson.nasdvr.model;
 
 import javax.persistence.*;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 8:58 AM
- *
- * @Author frj
- */
 @Entity
 @Table(name = "hdhr_modulation")
-public class Modulation {
+public class Modulation  implements   NasDvrEntity {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
     private String modulation;
 
@@ -34,12 +27,12 @@ public class Modulation {
         this.channelMap = channelMap;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 
     public String getModulation() {

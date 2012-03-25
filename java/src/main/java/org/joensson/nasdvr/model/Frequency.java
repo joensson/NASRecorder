@@ -2,21 +2,14 @@ package org.joensson.nasdvr.model;
 
 import javax.persistence.*;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 8:30 AM
- *
- * @Author frj
- */
 @Entity
 @Table(name = "hdhr_channel_frequency")
-public class Frequency {
+public class Frequency  implements   NasDvrEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
     @Column(name = "freq")
     private int frequency;
@@ -41,12 +34,12 @@ public class Frequency {
         this.channelMap = channelMap;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 
     public int getFrequency() {

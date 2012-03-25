@@ -2,17 +2,17 @@ package org.joensson.nasdvr.dao.jdbc;
 
 import org.joensson.nasdvr.dao.ChannelMapRepository;
 import org.joensson.nasdvr.model.ChannelMap;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * User: frj
- * Date: 3/25/12
- * Time: 9:58 PM
- *
- * @Author frj
- */
+@Component
 public class ChannelMapJdbcDao extends AbstractJdbcRepository<ChannelMap> implements ChannelMapRepository {
+
+    public List<ChannelMap> fetchAll() {
+        List<ChannelMap> res = jdbcTemplate.query("SELECT * FROM hdhr_channel_map WHERE id = ?", rowMapper);
+        return res;
+    }
 
     public ChannelMap find(int id) {
         List<ChannelMap> res = jdbcTemplate.query("SELECT * FROM hdhr_channel_map WHERE id = ?", rowMapper, id);

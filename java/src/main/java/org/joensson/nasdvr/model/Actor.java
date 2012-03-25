@@ -1,20 +1,18 @@
 package org.joensson.nasdvr.model;
 
 
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-
 import javax.persistence.*;
 import java.util.List;
 
 
 @Entity
 @Table(name = "actor")
-public class Actor {
+public class Actor  implements   NasDvrEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
     
     @Column(name = "actor_name")
     private String actorName;
@@ -27,8 +25,8 @@ public class Actor {
     @JoinColumn(name = "actor_id")
     private List<ProgrammeCredits> credits;
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setActorName(String actorName) {
@@ -47,8 +45,8 @@ public class Actor {
         return characterName;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
 }

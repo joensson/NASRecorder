@@ -6,15 +6,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * User: frj
- * Date: 3/25/12
- * Time: 9:18 PM
- *
- * @Author frj
- */
 @Component
 public class CategoryJdbcDao extends AbstractJdbcRepository<Category> implements CategoryRepository {
+
+    public List<Category> fetchAll() {
+        List<Category> results = jdbcTemplate.query("SELECT * FROM category WHERE id=?", rowMapper);
+        return results;
+    }
 
     public Category find(int id) {
         List<Category> results = jdbcTemplate.query("SELECT * FROM category WHERE id=?", rowMapper, id);
@@ -27,10 +25,10 @@ public class CategoryJdbcDao extends AbstractJdbcRepository<Category> implements
     }
 
     public void save(Category category) {
-        if (category.getEntityId() == 0) {
+        if (category.getId() == 0) {
             jdbcTemplate.update("INSERT INTO category (name) VALUES(?)", category.getName());
         } else {
-            jdbcTemplate.update("UPDATE category SET name = ? WHERE id = ?", category.getName(), category.getEntityId());
+            jdbcTemplate.update("UPDATE category SET name = ? WHERE id = ?", category.getName(), category.getId());
         }
 
     }

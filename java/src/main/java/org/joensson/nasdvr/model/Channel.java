@@ -1,25 +1,16 @@
 package org.joensson.nasdvr.model;
 
-import com.sun.javadoc.ProgramElementDoc;
-
 import javax.persistence.*;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 8:21 AM
- *
- * @Author frj
- */
 @Entity
 @Table(name = "channel")
-public class Channel {
+public class Channel  implements   NasDvrEntity {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
     @Column(name = "channel_id")
     private String channelId;
@@ -48,12 +39,12 @@ public class Channel {
         this.displayName = displayName;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 
     public Program getProgram() {

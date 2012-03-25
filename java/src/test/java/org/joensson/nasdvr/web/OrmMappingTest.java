@@ -49,7 +49,7 @@ public class OrmMappingTest {
         Category category = buildCategory();
         sessionFactory.getCurrentSession().save(category);
 
-        assertFalse("EntityId not set", 0 == category.getEntityId());
+        assertFalse("EntityId not set", 0 == category.getId());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class OrmMappingTest {
         ChannelMap channelMap = buildChannelMap();
         sessionFactory.getCurrentSession().save(channelMap);
 
-        assertFalse("EntityId not set", 0 == channelMap.getEntityId());
+        assertFalse("EntityId not set", 0 == channelMap.getId());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class OrmMappingTest {
         Modulation modulation = buildModulation(buildChannelMap());
         sessionFactory.getCurrentSession().save(modulation);
 
-        assertFalse("EntityId not set", 0 == modulation.getEntityId());
+        assertFalse("EntityId not set", 0 == modulation.getId());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class OrmMappingTest {
         Frequency frequency = buildFrequency(buildChannelMap(), buildModulation(buildChannelMap()));
         sessionFactory.getCurrentSession().save(frequency);
 
-        assertFalse("EntityId not set", 0 == frequency.getEntityId());
+        assertFalse("EntityId not set", 0 == frequency.getId());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class OrmMappingTest {
         Program program = buildProgram(buildFrequency(buildChannelMap(), buildModulation(buildChannelMap())));
         sessionFactory.getCurrentSession().save(program);
 
-        assertFalse("EntityId not set", 0 == program.getEntityId());
+        assertFalse("EntityId not set", 0 == program.getId());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class OrmMappingTest {
         Channel channel = buildChannel(buildProgram(buildFrequency(buildChannelMap(), buildModulation(buildChannelMap()))));
         sessionFactory.getCurrentSession().save(channel);
 
-        assertFalse("EntityId not set", 0 == channel.getEntityId());
+        assertFalse("EntityId not set", 0 == channel.getId());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class OrmMappingTest {
 
         sessionFactory.getCurrentSession().save(actor);
 
-        assertFalse("EntityId not set", 0 == actor.getEntityId());
+        assertFalse("EntityId not set", 0 == actor.getId());
 
     }
 
@@ -117,7 +117,7 @@ public class OrmMappingTest {
                                                                               ));
         sessionFactory.getCurrentSession().save(credits);
 
-        assertFalse("EntityId not set", 0 == credits.getEntityId());
+        assertFalse("EntityId not set", 0 == credits.getId());
     }
 
     @Test
@@ -137,7 +137,7 @@ public class OrmMappingTest {
 
         sessionFactory.getCurrentSession().save(programme);
 
-        assertFalse("EntityId not set", 0 == programme.getEntityId());
+        assertFalse("EntityId not set", 0 == programme.getId());
     }
 
 

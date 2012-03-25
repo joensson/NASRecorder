@@ -2,22 +2,16 @@ package org.joensson.nasdvr.model;
 
 import javax.persistence.*;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 8:55 AM
- *
- * @Author frj
- */
+
 @Entity
 @Table(name = "hdhr_channel_map")
-public class ChannelMap {
+public class ChannelMap  implements   NasDvrEntity {
 //TODO Make this an enum and map it directly from the table using jpa2
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
     @Column(name = "channel_map")
     private String channelMap;
@@ -40,11 +34,11 @@ public class ChannelMap {
         this.description = description;
     }
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 }

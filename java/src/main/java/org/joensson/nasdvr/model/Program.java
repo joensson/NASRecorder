@@ -2,22 +2,15 @@ package org.joensson.nasdvr.model;
 
 import javax.persistence.*;
 
-/**
- * User: frj
- * Date: 3/22/12
- * Time: 8:27 AM
- *
- * @Author frj
- */
 
 @Entity
 @Table(name = "hdhr_program")
-public class Program {
+public class Program  implements   NasDvrEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int entityId;
+    private int id;
 
     private int program;
 
@@ -28,12 +21,12 @@ public class Program {
     @JoinColumn(name = "frequency_id")
     private Frequency frequency;
 
-    public int getEntityId() {
-        return entityId;
+    public int getId() {
+        return id;
     }
 
-    protected void setEntityId(int entityId) {
-        this.entityId = entityId;
+    protected void setId(int id) {
+        this.id = id;
     }
 
     public Frequency getFrequency() {
