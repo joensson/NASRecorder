@@ -4,13 +4,19 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "channel")
-public class Channel  implements   NasDvrEntity {
-
-
+public class Channel extends NasDvrEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     @Column(name = "channel_id")
     private String channelId;
@@ -18,10 +24,9 @@ public class Channel  implements   NasDvrEntity {
     @Column(name = "display_name")
     private String displayName;
 
-    @OneToOne(cascade = CascadeType.ALL )
-    @JoinColumn(name = "hdhr_program_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "program_id")
     private Program program;
-
 
     public String getChannelId() {
         return channelId;
@@ -39,14 +44,6 @@ public class Channel  implements   NasDvrEntity {
         this.displayName = displayName;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    protected void setId(int id) {
-        this.id = id;
-    }
-
     public Program getProgram() {
         return program;
     }
@@ -54,4 +51,17 @@ public class Channel  implements   NasDvrEntity {
     public void setProgram(Program program) {
         this.program = program;
     }
+
+    //This field is used by JdbcRowMapper rather than setting the actual Program, only the foreign key is set
+    @Transient
+    private int programId;
+
+    public int getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(int programId) {
+        this.programId = programId;
+    }
+
 }

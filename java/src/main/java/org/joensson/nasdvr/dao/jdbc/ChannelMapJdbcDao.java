@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ChannelMapJdbcDao extends AbstractJdbcRepository<ChannelMap> implements ChannelMapRepository {
+public class ChannelMapJdbcDao extends AbstractRowMappingJdbcRepository<ChannelMap> implements ChannelMapRepository {
 
     public List<ChannelMap> fetchAll() {
-        List<ChannelMap> res = jdbcTemplate.query("SELECT * FROM hdhr_channel_map WHERE id = ?", rowMapper);
+        List<ChannelMap> res = jdbcTemplate.query("SELECT * FROM hdhr_channel_map", rowMapper);
         return res;
     }
 

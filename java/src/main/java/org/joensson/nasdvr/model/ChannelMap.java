@@ -5,13 +5,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "hdhr_channel_map")
-public class ChannelMap  implements   NasDvrEntity {
-//TODO Make this an enum and map it directly from the table using jpa2
-
+public class ChannelMap extends NasDvrEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+//TODO Make this an enum and map it directly from the table using jpa2
 
     @Column(name = "channel_map")
     private String channelMap;
@@ -34,11 +43,4 @@ public class ChannelMap  implements   NasDvrEntity {
         this.description = description;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    protected void setId(int id) {
-        this.id = id;
-    }
 }

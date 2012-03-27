@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ProgramJdbcDao extends AbstractJdbcRepository<Program> implements ProgramRepository {
+public class ProgramJdbcDao extends AbstractRowMappingJdbcRepository<Program> implements ProgramRepository {
 
     //TODO Insert calls to FrequencyRepository
     public List<Program> fetchAll() {
@@ -32,9 +32,9 @@ public class ProgramJdbcDao extends AbstractJdbcRepository<Program> implements P
 
     public void save(Program entity) {
         if (entity.getId() == 0) {
-            jdbcTemplate.update("INSERT INTO hdhr_program (frequency_id, program, program_name) VALUES (?, ?, ?)", entity.getFrequency().getId(), entity.getProgram(), entity.getProgramName());
+            jdbcTemplate.update("INSERT INTO hdhr_program (frequency_id, program, program_name) VALUES (?, ?, ?)", entity.getFrequencyId(), entity.getProgram(), entity.getProgramName());
         } else {
-            jdbcTemplate.update("UPDATE hdhr_program SET frequency_id = ?, program = ?, program_name = ?", entity.getFrequency().getId(), entity.getProgram(), entity.getProgramName(), entity.getId());
+            jdbcTemplate.update("UPDATE hdhr_program SET frequency_id = ?, program = ?, program_name = ? WHERE id = ?", entity.getFrequencyId(), entity.getProgram(), entity.getProgramName(), entity.getId());
         }
     }
 }

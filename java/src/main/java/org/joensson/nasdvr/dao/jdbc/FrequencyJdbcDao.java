@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class FrequencyJdbcDao extends AbstractJdbcRepository<Frequency> implements FrequencyRepository {
+public class FrequencyJdbcDao extends AbstractRowMappingJdbcRepository<Frequency> implements FrequencyRepository {
 
 
     public List<Frequency> fetchAll() {
-        List<Frequency> results = jdbcTemplate.query("SELECT * FROM hdhr_channel_frequency WHERE id = ?", rowMapper);
+        List<Frequency> results = jdbcTemplate.query("SELECT * FROM hdhr_channel_frequency", rowMapper);
         return results;
     }
 
@@ -33,9 +33,9 @@ public class FrequencyJdbcDao extends AbstractJdbcRepository<Frequency> implemen
     public void save(Frequency entity) {
         //TODO: Check if channelMapDao and modulationDao need to insert their objects
         if (entity.getId() == 0) {
-            jdbcTemplate.update("INSERT INTO hdhr_channel_frequency (channel_map_id, modulation_id, freq, symbol_rate) VALUES (?, ?, ?, ?)", entity.getChannelMap().getId(), entity.getModulation().getId(), entity.getFrequency(), entity.getSymbolRate());
+            jdbcTemplate.update("INSERT INTO hdhr_channel_frequency (channel_map_id, modulation_id, frequency, symbol_rate) VALUES (?, ?, ?, ?)", entity.getChannelMapId(), entity.getModulationId(), entity.getFrequency(), entity.getSymbolRate());
         } else {
-            jdbcTemplate.update("UPDATE hdhr_channel_frequency SET channel_map_id = ?, modulation_id = ?, freq = ?, symbol_rate = ? WHERE id = ?", entity.getChannelMap().getId(), entity.getModulation().getId(), entity.getFrequency(), entity.getSymbolRate(), entity.getId());
+            jdbcTemplate.update("UPDATE hdhr_channel_frequency SET channel_map_id = ?, modulation_id = ?, frequency = ?, symbol_rate = ? WHERE id = ?", entity.getChannelMapId(), entity.getModulationId(), entity.getFrequency(), entity.getSymbolRate(), entity.getId());
 
         }
     }

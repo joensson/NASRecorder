@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CategoryJdbcDao extends AbstractJdbcRepository<Category> implements CategoryRepository {
+public class CategoryJdbcDao extends AbstractRowMappingJdbcRepository<Category> implements CategoryRepository {
 
     public List<Category> fetchAll() {
-        List<Category> results = jdbcTemplate.query("SELECT * FROM category WHERE id=?", rowMapper);
+        List<Category> results = jdbcTemplate.query("SELECT * FROM category", rowMapper);
         return results;
     }
 

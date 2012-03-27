@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ActorJdbcDao extends AbstractJdbcRepository<Actor> implements ActorRepository {
+public class ActorJdbcDao extends AbstractRowMappingJdbcRepository<Actor> implements ActorRepository {
 
     public List<Actor> fetchAll() {
         List<Actor> results = jdbcTemplate.query("SELECT * FROM actor", rowMapper);
@@ -36,7 +36,7 @@ public class ActorJdbcDao extends AbstractJdbcRepository<Actor> implements Actor
         if (actor.getId() == 0) {
             jdbcTemplate.update("INSERT INTO actor (actor_name, character_name) VALUES(?, ?)", actor.getActorName(), actor.getCharacterName());
         } else {
-            jdbcTemplate.update("UPDATE actor SET actor_name = ? AND  character_name = ?  WHERE id = ?", actor.getActorName(), actor.getCharacterName(), actor.getId());
+            jdbcTemplate.update("UPDATE actor SET actor_name = ?, character_name = ?  WHERE id = ?", actor.getActorName(), actor.getCharacterName(), actor.getId());
         }
 
     }

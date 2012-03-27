@@ -4,36 +4,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "hdhr_modulation")
-public class Modulation  implements   NasDvrEntity {
-
-
+public class Modulation extends NasDvrEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    private String modulation;
-
-    @ManyToOne(cascade = CascadeType.ALL )
-    @JoinColumn(name = "channel_map_id")
-    private ChannelMap channelMap;
-
-
-    public ChannelMap getChannelMap() {
-        return channelMap;
-    }
-
-    public void setChannelMap(ChannelMap channelMap) {
-        this.channelMap = channelMap;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
         return id;
     }
 
-    protected void setId(int id) {
-        this.id = id;
-    }
+
+    private String modulation;
 
     public String getModulation() {
         return modulation;
@@ -42,4 +28,5 @@ public class Modulation  implements   NasDvrEntity {
     public void setModulation(String modulation) {
         this.modulation = modulation;
     }
+
 }

@@ -6,14 +6,22 @@ import java.util.Date;
 
 @Entity
 @Table(name = "programme")
-public class Programme  implements   NasDvrEntity {
-
+public class Programme extends NasDvrEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL )
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
@@ -33,7 +41,7 @@ public class Programme  implements   NasDvrEntity {
 
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL )
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
 
@@ -76,14 +84,6 @@ public class Programme  implements   NasDvrEntity {
         this.endTime = endTime;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    protected void setId(int id) {
-        this.id = id;
-    }
-
     public String getEpisodeNumber() {
         return episodeNumber;
     }
@@ -123,4 +123,38 @@ public class Programme  implements   NasDvrEntity {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public ProgrammeCredits getCredits() {
+        return credits;
+    }
+
+    public void setCredits(ProgrammeCredits credits) {
+        this.credits = credits;
+    }
+
+    //This field is used by the jdbc row mapper - rather than setting the Channel object, the foreign key is set
+    @Transient
+    private int channelId;
+
+    //This field is used by the jdbc row mapper - rather than setting the Category object, the foreign key is set
+    @Transient
+    private int categoryId;
+
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(int channelId) {
+        this.channelId = channelId;
+    }
+
 }

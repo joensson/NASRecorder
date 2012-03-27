@@ -1,17 +1,25 @@
 package org.joensson.nasdvr.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 @Table(name = "programme_credits")
-public class ProgrammeCredits  implements   NasDvrEntity {
-
+public class ProgrammeCredits extends NasDvrEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -19,7 +27,7 @@ public class ProgrammeCredits  implements   NasDvrEntity {
     private Programme programme;
 
     @OneToMany(mappedBy = "credits")
-    private List<Actor> actors;
+    private List<Actor> actors = new ArrayList<Actor>();
 
     public List<Actor> getActors() {
         return actors;
@@ -37,12 +45,14 @@ public class ProgrammeCredits  implements   NasDvrEntity {
         this.programme = programme;
     }
 
-    public int getId() {
-        return id;
+    @Transient
+    private int programmeId;
+
+    public int getProgrammeId() {
+        return programmeId;
     }
 
-    protected void setId(int id) {
-        this.id = id;
+    public void setProgrammeId(int programmeId) {
+        this.programmeId = programmeId;
     }
-
 }

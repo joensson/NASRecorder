@@ -1,14 +1,13 @@
 package org.joensson.nasdvr.dao.jdbc;
 
 import org.joensson.nasdvr.dao.ModulationRepository;
-import org.joensson.nasdvr.model.Frequency;
 import org.joensson.nasdvr.model.Modulation;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class ModulationJdbcDao extends AbstractJdbcRepository<Modulation> implements ModulationRepository {
+public class ModulationJdbcDao extends AbstractRowMappingJdbcRepository<Modulation> implements ModulationRepository {
 
     public List<Modulation> fetchAll() {
         List<Modulation> results = jdbcTemplate.query("SELECT * FROM hdhr_modulation", rowMapper);

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ChannelJdbcDao extends AbstractJdbcRepository<Channel> implements ChannelRepository {
+public class ChannelJdbcDao extends AbstractRowMappingJdbcRepository<Channel> implements ChannelRepository {
 
 
     @Autowired
@@ -22,7 +22,7 @@ public class ChannelJdbcDao extends AbstractJdbcRepository<Channel> implements C
 
 
     public List<Channel> fetchAll() {
-        List<Channel> results = jdbcTemplate.query("SELECT * FROM channel WHERE display_name = ?", rowMapper);
+        List<Channel> results = jdbcTemplate.query("SELECT * FROM channel", rowMapper);
         return results;
     }
 
@@ -43,9 +43,9 @@ public class ChannelJdbcDao extends AbstractJdbcRepository<Channel> implements C
     public void save(Channel channel) {
         //TODO: Call programdao and create program before inserting reference
         if (channel.getId() == 0) {
-            jdbcTemplate.update("INSERT INTO channel (channel_id, display_name, hdhr_program_id) VALUES (?, ?, ?)", channel.getChannelId(), channel.getDisplayName(), channel.getProgram().getId());
+            jdbcTemplate.update("INSERT INTO channel (channel_id, display_name, program_id) VALUES (?, ?, ?)", channel.getChannelId(), channel.getDisplayName(), channel.getProgramId());
         } else {
-            jdbcTemplate.update("UPDATE channel SET channel_id = ?, display_name = ?, hdhr_program_id = ? WHERE id = ?", channel.getChannelId(), channel.getDisplayName(), channel.getProgram().getId(), channel.getId());
+            jdbcTemplate.update("UPDATE channel SET channel_id = ?, display_name = ?, program_id = ? WHERE id = ?", channel.getChannelId(), channel.getDisplayName(), channel.getProgramId(), channel.getId());
         }
     }
 }

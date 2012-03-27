@@ -7,13 +7,21 @@ import java.util.List;
 
 @Entity
 @Table(name = "actor")
-public class Actor  implements   NasDvrEntity {
-    
+public class Actor extends NasDvrEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     @Column(name = "actor_name")
     private String actorName;
 
@@ -25,9 +33,6 @@ public class Actor  implements   NasDvrEntity {
     @JoinColumn(name = "actor_id")
     private List<ProgrammeCredits> credits;
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setActorName(String actorName) {
         this.actorName = actorName;
@@ -45,8 +50,5 @@ public class Actor  implements   NasDvrEntity {
         return characterName;
     }
 
-    public int getId() {
-        return id;
-    }
 
 }

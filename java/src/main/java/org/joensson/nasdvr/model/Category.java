@@ -4,24 +4,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "category")
-public class Category  implements   NasDvrEntity {
-
+public class Category extends NasDvrEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    private String name;
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
     }
 
-    protected void setId(int id) {
-        this.id = id;
-    }
+    private String name;
 
     public String getName() {
         return name;

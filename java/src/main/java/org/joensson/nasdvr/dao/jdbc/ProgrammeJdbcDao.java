@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class ProgrammeJdbcDao extends AbstractJdbcRepository<Programme> implements ProgrammeRepository {
+public class ProgrammeJdbcDao extends AbstractRowMappingJdbcRepository<Programme> implements ProgrammeRepository {
 
     public List<Programme> fetchAll() {
         List<Programme> programmes = jdbcTemplate.query("SELECT * FROM programme", rowMapper);
@@ -44,25 +44,25 @@ public class ProgrammeJdbcDao extends AbstractJdbcRepository<Programme> implemen
     public void save(Programme entity) {
         if (entity.getId() == 0) {
             jdbcTemplate.update("INSERT INTO programme (channel_id, start_time, end_time, title, sub_title, description, category_id, episode_num, icon) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                                entity.getChannel().getId(),
+                                entity.getChannelId(),
                                 entity.getStartTime(),
                                 entity.getEndTime(),
                                 entity.getTitle(),
                                 entity.getSubTitle(),
                                 entity.getDescription(),
-                                entity.getCategory().getId(),
+                                entity.getCategoryId(),
                                 entity.getEpisodeNumber(),
                                 entity.getIcon()
             );
         } else {
             jdbcTemplate.update("UPDATE programme SET channel_id = ?, start_time = ?, end_time = ?, title = ?, sub_title = ?, description = ?, category_id = ?, episode_num = ?, icon = ? WHERE id = ?",
-                                entity.getChannel().getId(),
+                                entity.getChannelId(),
                                 entity.getStartTime(),
                                 entity.getEndTime(),
                                 entity.getTitle(),
                                 entity.getSubTitle(),
                                 entity.getDescription(),
-                                entity.getCategory().getId(),
+                                entity.getCategoryId(),
                                 entity.getEpisodeNumber(),
                                 entity.getIcon(),
                                 entity.getId()

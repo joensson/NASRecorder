@@ -16,14 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * User: frj
- * Date: 3/20/12
- * Time: 10:33 AM
- *
- * @Author frj
- */
-
 @Controller
 @RequestMapping("/schedule")
 public class SchedulingController {
@@ -64,7 +56,6 @@ public class SchedulingController {
         channelMap.setDescription("Bla bla");
 
         Modulation modulation = new Modulation();
-        modulation.setChannelMap(channelMap);
         modulation.setModulation("a8qam256");
 
         Frequency frequency = new Frequency();

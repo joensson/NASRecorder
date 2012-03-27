@@ -30,10 +30,8 @@ INSERT INTO hdhr_channel_map (channel_map, description) VALUES ('us-irc', 'Digit
 /* ( hdhomerun_config FFFFFFFF get /sys/features | grep modulation ) */
 CREATE TABLE IF NOT EXISTS hdhr_modulation (
   id INT NOT NULL AUTO_INCREMENT,
-  channel_map_id INT,
   modulation VARCHAR(10) NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (channel_map_id) REFERENCES hdhr_channel_map(id) ON DELETE SET NULL ON UPDATE CASCADE
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
 INSERT INTO hdhr_modulation (modulation) VALUES ('t8qam64');
@@ -68,7 +66,7 @@ CREATE TABLE IF NOT EXISTS hdhr_channel_frequency (
   id INT NOT NULL AUTO_INCREMENT,
   channel_map_id INT, 
   modulation_id INT NOT NULL,
-  freq INT NOT NULL,
+  frequency INT NOT NULL,
   symbol_rate INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (channel_map_id) REFERENCES hdhr_channel_map(id) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -94,9 +92,9 @@ CREATE TABLE IF NOT EXISTS channel (
   id INT NOT NULL AUTO_INCREMENT,
   channel_id varchar(100),
   display_name VARCHAR(50),
-  hdhr_program_id INT,
+  program_id INT,
   PRIMARY KEY (id),
-  FOREIGN KEY (hdhr_program_id) REFERENCES hdhr_program(id) ON DELETE SET NULL ON UPDATE CASCADE
+  FOREIGN KEY (program_id) REFERENCES hdhr_program(id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB COLLATE=utf8_bin;
 
 
